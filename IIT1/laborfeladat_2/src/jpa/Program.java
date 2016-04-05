@@ -5,6 +5,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.logging.*;
 
+import javax.naming.directory.InvalidAttributeValueException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -120,16 +121,21 @@ public class Program {
     		throw new Exception("Hiba uj Tipus megadaskor: Azonosito ures!");
     	try {
 	    	//TODO Azonosító kezelése
-	    	Query azonositok = em.createQuery("SELECT t FROM Tipus WHERE azonosito = :adottAzonosito");
+	    	Query azonositok = em.createQuery(
+	    			"SELECT t.azonosito "
+	    		  + "FROM Tipus t "
+	    		  + "WHERE t.azonosito = :adottAzonosito"
+	    			);
 	    	azonositok.setParameter("adottAzonosito", azonosito);
 	    	
-	    	List<Tipus> vaneAdott = azonositok.getResultList();		// Nem null, akkor baj van
+	    	if (!(azonositok.getResultList().isEmpty()))
+	    		throw new InvalidAttributeValueException("Ilyen azonositoju mozdony mar van!");
 	    	
-	    	if (vaneAdott != null)
-	    		throw new Exception("Ilyen azonositoju mozdony mar van!");
 	    	// Nincs adott azonositójú tipus
+    	} catch (InvalidAttributeValueException iave) {
+    		throw new Exception("Hiba uj Tipus beszurasanal: " + iave.getMessage());
     	} catch (Exception e) {
-    		throw new Exception("Hiba: Ilyen azonositoju tipus mar letezik!" + e.toString());
+    		throw new Exception(e.toString());
     	}
     	
     	// Feltöltés
