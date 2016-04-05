@@ -107,7 +107,8 @@ public class Program {
             em.getTransaction().rollback();
             throw e;
         } finally {
-        	
+        	/*if (em.isOpen())
+        		em.close();*/
         }
     }
 
@@ -120,12 +121,12 @@ public class Program {
     	else if (azonosito == null)
     		throw new Exception("Hiba uj Tipus megadaskor: Azonosito ures!");
     	try {
-	    	//TODO Azonosító kezelése
 	    	Query azonositok = em.createQuery(
 	    			"SELECT t.azonosito "
 	    		  + "FROM Tipus t "
 	    		  + "WHERE t.azonosito = :adottAzonosito"
-	    			);
+	    			); //Kell-e ellenorizni ugyanazt a fajta ne legyen benne? Le kell-e zárni?
+	    	
 	    	azonositok.setParameter("adottAzonosito", azonosito);
 	    	
 	    	if (!(azonositok.getResultList().isEmpty()))
@@ -186,6 +187,7 @@ public class Program {
     	//TODO    	
     	//Készítsen lekérdezést, amely visszaadja az összes mozdonyt, majd
         //irassa ki a listazEntity metódussal az eredményt.
+    	listazEntity(em.createQuery("SELECT m FROM Mozdony m").getResultList());//Ennyi??
     }
 
     //Vonatszamok listazasa
