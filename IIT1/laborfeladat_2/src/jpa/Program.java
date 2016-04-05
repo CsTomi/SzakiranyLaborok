@@ -161,7 +161,7 @@ public class Program {
 	    			"SELECT t "
 	    		  + "FROM Tipus t "
 	    		  + "WHERE t.azonosito = :adottAzonosito"
-	    			); //Kell-e ellenorizni ugyanazt a fajta ne legyen benne? Le kell-e zárni?
+	    			);
 	    	
 	    	tipusAzonosito.setParameter("adottAzonosito", tipusID);
 	    	
@@ -181,7 +181,6 @@ public class Program {
 	    	if (!(mozdonyAzonosito.getResultList().isEmpty()))
 	    		throw new InvalidAttributeValueException("Mar van ilyen azonositoju mozdony!");
 	    	
-	    	System.out.println(temp.size());
 	    	Tipus t = (Tipus)temp.get(0);
 	    	
 	    	// Feltöltés
