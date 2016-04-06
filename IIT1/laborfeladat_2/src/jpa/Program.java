@@ -214,11 +214,6 @@ public class Program {
 
     // Uj vonat felvetele
     public void ujVonat(String vonatszamAzonosito, String datum, String mozdonySorszam, String keses) throws Exception {
-       	
-        //Ellenõrizze, hogy érvényes-e a vonatszám, és létezik a mozdony.
-        //Ellenõrizze, hogy az adott napon nincs másik vonat ugyanezzel a vonatszámmal.		
-    	//Hozza létre az új "Vonat" entitást és rögzítse adatbázisban az "ujEntity" metódussal.
-        //Növelje a mozdony futottkm-ét a vonatszám szerinti úthosszal. 
     	try {
     		// hibat dobnak, ha nem lehet
     		int vonatSzam = Integer.parseInt(vonatszamAzonosito);
@@ -281,7 +276,7 @@ public class Program {
     	} catch (InvalidAttributeValueException iave) {
     		throw new Exception("Hiba tortent vonat beszurasakor: " + iave.getMessage());
     	} catch (IllegalStateException i) {
-    		System.out.println(i.getLocalizedMessage()+" " + i.getMessage());
+    		System.out.println("Hiba adatbazis oldalon: "+i.getLocalizedMessage()+" " + i.getMessage());
     	} catch (Exception e) {
     		throw new Exception(e.toString());
     	}  	
