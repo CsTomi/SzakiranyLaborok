@@ -19,16 +19,14 @@ public class Mozdony {
 	private int id;    
     private int futottkm;
     private Tipus tipus;
-    private Vonat v;
 
     public Mozdony() {
     }
      
-    public Mozdony(int id, Tipus t, int km/*, Vonat _v*/) {
+    public Mozdony(int id, Tipus t, int km) {
     	this.id = id;
     	this.futottkm = km;
     	this.tipus = t;
-    	//this.setV(_v);
     }
     
     public int getFutottkm() {
@@ -48,7 +46,7 @@ public class Mozdony {
         this.futottkm = futottkm;
     }
 
-    @ManyToOne
+    //@ManyToOne
 	public int getId() {
     	return id;
 	}
@@ -60,19 +58,4 @@ public class Mozdony {
 	public String toString() {
 		return new String(id + " " + tipus.getAzonosito() + " " +futottkm);
 	}
-/*
-	public Vonat getV() {
-		return v;
-	}
-
-	public void setV(Vonat v) {
-		this.v = v;
-	}
-	
-	@ManyToOne
-	//@JoinColumn(name="V_ID")
-	public int getVID() {
-		return v.getId();
-	}
-*/
 }

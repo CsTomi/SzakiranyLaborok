@@ -15,16 +15,17 @@ import java.util.Date;
 
 @Entity
 public class Vonat {
-
-	@Temporal(TemporalType.DATE)
-    private  Date datum;
+	
     private int keses;
-    private Vonatszam szam;
     private Mozdony mozdony;
-
+    
+    @Id
+    private Vonatszam vonatSzam;    
 	@Id
 	private int id;    
- 
+	@Id
+	@Temporal(TemporalType.DATE)
+    private  Date datum;
 	
     public Vonat() {
     }
@@ -33,14 +34,15 @@ public class Vonat {
     	this.id = _id;
     	this.keses = _keses;
     	this.datum = _datum;
-    	this.setSzam(vsz);
+    	this.setVSzam(vsz);
     	this.setMozdony(m);
     }
     
+    @OneToOne
 	public int getId() {
     	return id;
 	}
-
+	
     public Date getDatum() {
         return datum;
     }
@@ -56,16 +58,15 @@ public class Vonat {
     public void setKeses(int keses) {
         this.keses = keses;
     }
-    @OneToOne
-	public Vonatszam getSzam() {
-		return szam;
+    
+	public Vonatszam getVSzam() {
+		return vonatSzam;
 	}
 
-	public void setSzam(Vonatszam szam) {
-		this.szam = szam;
+	public void setVSzam(Vonatszam szam) {
+		this.vonatSzam = szam;
 	}
 
-	@OneToOne
 	public Mozdony getMozdony() {
 		return mozdony;
 	}
@@ -78,6 +79,6 @@ public class Vonat {
 		SimpleDateFormat sdfr = new SimpleDateFormat("yyyy.MM.dd");
 		String tmpDatum = sdfr.format( datum );
 		
-		return szam.getSzam() + " " + tmpDatum + " " + mozdony.getId() + " " + mozdony.getFutottkm() + " " + keses; 
+		return vonatSzam.getSzam() + " " + tmpDatum + " " + mozdony.getId() + " " + mozdony.getFutottkm() + " " + keses; 
 	}
 }

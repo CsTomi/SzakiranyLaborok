@@ -24,7 +24,7 @@ public class Vonatszam {
         this.szam = szam;
         this.uthossz = uthossz;
     }
-
+    
     public int getSzam() {
         return szam;
     }

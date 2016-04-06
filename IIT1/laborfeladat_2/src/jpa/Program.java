@@ -107,7 +107,6 @@ public class Program {
         } catch (Exception e) {
             em.getTransaction().rollback();
             throw e;
-        } finally {
         }
     }
     
@@ -222,9 +221,10 @@ public class Program {
         //Növelje a mozdony futottkm-ét a vonatszám szerinti úthosszal. 
     	try {
     		// hibat dobnak, ha nem lehet
-    		int szam = Integer.parseInt(vonatszamAzonosito);
-    		int id = Integer.parseInt(mozdonySorszam);
-    		int kes = Integer.parseInt(keses);
+    		int vonatSzam = Integer.parseInt(vonatszamAzonosito);
+    		int mozdonyID = Integer.parseInt(mozdonySorszam);
+    		int vonatKeses = Integer.parseInt(keses);
+    		
     		
     		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
     		Date formated_date = format.parse(datum);
@@ -233,9 +233,9 @@ public class Program {
     		Query vaneVonatszam = em.createQuery("SELECT vsz "
     											+ "FROM Vonatszam vsz "
     											+ "WHERE vsz.szam = :adottVonatSzam");
-    		vaneVonatszam.setParameter("adottVonatSzam", szam);
+    		vaneVonatszam.setParameter("adottVonatSzam", vonatSzam);
     		
-    		List pVSzam = vaneVonatszam.getResultList(); 
+    		List<Vonatszam> pVSzam = vaneVonatszam.getResultList(); 
     		
     		// ha nincs ilyen szamu vonat, akkor hibat kell dobni
     		if (pVSzam.isEmpty())
@@ -245,9 +245,9 @@ public class Program {
     		Query vaneMozdony = em.createQuery("SELECT m "
 											   + "FROM Mozdony m "
 											   + "WHERE m.id = :adottMozdonyID");
-    		vaneMozdony.setParameter("adottMozdonyID", id);
+    		vaneMozdony.setParameter("adottMozdonyID", mozdonyID);
     		
-    		List pMozdony = vaneMozdony.getResultList();
+    		List<Mozdony> pMozdony = vaneMozdony.getResultList();
     		
     		if (pMozdony.isEmpty())
     			throw new InvalidAttributeValueException("Ilyen azonositoju mozdony nincs!");
@@ -255,24 +255,26 @@ public class Program {
     		// Datum ellenorzese
     		Query vaneVonatAznap = em.createQuery("SELECT v "
 					   							+ "FROM Vonat v "
-					   							+ "WHERE v.datum = ?1");
+					   							+ "WHERE v.datum = ?1 ");
     		vaneVonatAznap.setParameter(1, formated_date, TemporalType.DATE);
     		
-    		List pVonat = vaneVonatAznap.getResultList();
+    		List<Vonat> pVonat = vaneVonatAznap.getResultList();
     		
+    		// ures, akkor nincs akadaly, de ha nem ures, akkor ellenorizni kell a vonatszamot
     		if (!(pVonat.isEmpty())) {
-    			for (Object object : pVonat) {
-					Vonat tmp = (Vonat)object;
-					if (tmp.getSzam().getSzam() == szam && tmp.getMozdony().getId() == id)
-						throw new InvalidAttributeValueException("Mar van vonat beosztva a kijelolt napra!");
+    			for (Vonat object : pVonat) {
+					if ((object.getVSzam()).getSzam() == vonatSzam)
+						throw new InvalidAttributeValueException("Mar van vonat beosztva a kijelolt napra!");						
 				}
     		}
     		
-    		Mozdony m = (Mozdony)pMozdony.get(0);
-    		Vonatszam vsz = (Vonatszam)pVSzam.get(0);
+    		Mozdony m = pMozdony.get(0);
+    		Vonatszam vsz = pVSzam.get(0);
     		m.setFutottkm( m.getFutottkm() + vsz.getUthossz().intValue() );
+    		
     		// Perzisztalas
-    		ujEntity(new Vonat(id, kes, formated_date, vsz, m));
+    		// MozdonyID azonositja a mozdonyt
+    		ujEntity(new Vonat(mozdonyID, vonatKeses, formated_date, vsz, m));
     		
     	} catch (NumberFormatException nfe) {
     		throw new Exception("A parameterben kapott tipus nem megfelelo: " + nfe.getMessage());

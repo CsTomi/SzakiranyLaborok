@@ -39,16 +39,17 @@ public class VonatTest extends CommonTest {
         inputText.append("s 0093 112\n");
         inputText.append("s 0101 200\n");
         inputText.append("s 0102 200\n");
-        inputText.append("v 0061 2003.09.03 12 10\n");
-        inputText.append("v 0071 2003.10.03 31 10\n");
-        inputText.append("v 0102 2003.09.03 22 10\n");
-        inputText.append("v 0073 2003.10.03 23 10\n");
+        
+        inputText.append("v 0061 2003.09.03 12 10\n");        
+        inputText.append("v 0071 2003.10.03 31 10\n");        
+        inputText.append("v 0102 2003.09.03 22 10\n");        
+        inputText.append("v 0073 2003.10.03 23 10\n");        
         inputText.append("v 0092 2003.09.03 11 10\n");
         inputText.append("v 0093 2003.10.03 31 10\n");
         inputText.append("v 0082 2003.09.03 21 10\n");
         inputText.append("v 0101 2003.09.03 33 10\n");
-        inputText.append("v 0081 2003.10.03 22 10\n");
-        inputText.append("v 0073 2003.09.03 32 10\n");
+        inputText.append("v 0081 2003.10.03 22 10\n");        
+        inputText.append("v 0073 2003.09.03 32 10\n");        
         inputText.append("v 0063 2003.10.03 21 10\n");
         inputText.append("v 0091 2003.09.03 21 10\n");
         inputText.append("v 0062 2003.09.03 13 10\n");
@@ -62,10 +63,12 @@ public class VonatTest extends CommonTest {
         expectedOutputText.append("102 2003.09.03 22 866 10\n");
         expectedOutputText.append("73 2003.10.03 23 703 10\n");
         expectedOutputText.append("92 2003.09.03 11 212 10\n");
+        
         expectedOutputText.append("93 2003.10.03 31 915 10\n");
+        
         expectedOutputText.append("82 2003.09.03 21 918 10\n");
         expectedOutputText.append("101 2003.09.03 33 1100 10\n");
-        expectedOutputText.append("81 2003.10.03 22 866 10\n");
+        expectedOutputText.append("81 2003.10.03 22 866 10\n");        
         expectedOutputText.append("73 2003.09.03 32 903 10\n");
         expectedOutputText.append("63 2003.10.03 21 918 10\n");
         expectedOutputText.append("91 2003.09.03 21 918 10\n");
