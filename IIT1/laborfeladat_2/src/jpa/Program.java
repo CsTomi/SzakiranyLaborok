@@ -47,7 +47,6 @@ public class Program {
 	
     }
 
-
     public void startControl() {
 //	    InputStream input = System.in;
         BufferedReader instream = new BufferedReader(new InputStreamReader(System.in));
@@ -109,50 +108,39 @@ public class Program {
             em.getTransaction().rollback();
             throw e;
         } finally {
-        	/*if (em.isOpen())
-        		em.close();*/
         }
     }
     
     // Uj tipus felvetele
     public void ujTipus(String azonosito, String fajta) throws Exception {
-    	if (fajta == null)
-    		throw new Exception("Hiba uj Tipus megadaskor: A tipus neve ures!");
-    	else if (azonosito == null)
-    		throw new Exception("Hiba uj Tipus megadaskor: Azonosito ures!");
-    	
     	try {
+    		// van-e adott azonositoju tipus?
 	    	Query azonositok = em.createQuery(
 	    			"SELECT t.azonosito "
 	    		  + "FROM Tipus t "
 	    		  + "WHERE t.azonosito = :adottAzonosito"
-	    			); //Kell-e ellenorizni ugyanazt a fajta ne legyen benne? Le kell-e zárni?
-	    	
+	    			);	    	
 	    	azonositok.setParameter("adottAzonosito", azonosito);
 	    	
+	    	// listaba az eredmenyekkel
 	    	List<String> temp = azonositok.getResultList();
 	    	
+	    	// ha nem ures, akkor ilyen azonosito mar van
 	    	if (!(temp.isEmpty()))
 	    		throw new InvalidAttributeValueException("Ilyen azonositoju mozdony mar van!");
 	    	
-	    	// Feltöltés
+	    	// nincs akadalya a perzisztalasnak
 	    	ujEntity(new Tipus(azonosito, fajta));
 	    	
-	    	// Nincs adott azonositójú tipus
     	} catch (InvalidAttributeValueException iave) {
-    		throw new Exception("Hiba uj Tipus beszurasanal: " + iave.getMessage());
+    		throw new Exception("Hiba uj Tipus beszurasanal: " + iave.getMessage()); // letezo azon.
     	} catch (Exception e) {
-    		throw new Exception(e.toString());
+    		throw new Exception(e.toString()); // valami mas
     	}	
     }
 
     // Uj mozdony felvetele
-    public void ujMozdony(String sorszam, String tipusID, String futottkm) throws Exception {
-        //TODO
-        //Alakítsa át a megfelelõ típusokra a kapott String paramétereket.
-        //Ellenõrizze a típus létezését
-    	//Hozza létre az új "Mozdony" entitást és rögzítse adatbázisban az "ujEntity" metódussal.
-    	
+    public void ujMozdony(String sorszam, String tipusID, String futottkm) throws Exception {   	
     	try {
     		int id = Integer.parseInt(sorszam);
     		int km = Integer.parseInt(futottkm);
@@ -197,28 +185,25 @@ public class Program {
 
     // Uj vonatszam felvetele
     public void ujVonatszam(String sorszam, String uthossz) throws Exception {
-        //TODO
-        //Alakítsa át a megfelelõ típusokra a kapott String paramétereket.
-        //Ellenõrizze, hogy van-e már ilyen vonatszám
-    	//Hozza létre az új "Vonatszám" entitást és rögzítse adatbázisban az "ujEntity" metódussal.
     	try {
+    		// ha nem lehet castolni, NumberFormatException-t dobnak
     		int szam = Integer.parseInt(sorszam);
     		long hossz = Long.parseLong(uthossz);
     		
+    		// van-e adott sorszamu mozdony
     		Query vonatszam = em.createQuery(
 	    			"SELECT v.szam "
 	    		  + "FROM Vonatszam v "
 	    		  + "WHERE v.szam = :adottSzam"
-	    			); //Kell-e ellenorizni ugyanazt a fajta ne legyen benne? Le kell-e zárni?
-	    	
+	    			);
     		vonatszam.setParameter("adottSzam", szam);
 	    	
-	    	List<String> temp = vonatszam.getResultList();
+	    	List temp = vonatszam.getResultList();
 	    	
 	    	if (!(temp.isEmpty()))
 	    		throw new InvalidAttributeValueException("Ilyen azonositoju vonatszam mar van!");
 	    	
-	    	// Feltöltés
+	    	// perzisztalas
 	    	ujEntity(new Vonatszam(szam, hossz));
     		 		
     	} catch (NumberFormatException iave) {
@@ -230,22 +215,71 @@ public class Program {
 
     // Uj vonat felvetele
     public void ujVonat(String vonatszamAzonosito, String datum, String mozdonySorszam, String keses) throws Exception {
-       	//TODO
-        //Alakítsa át a megfelelõ típusokra a kapott String paramétereket. Tipp: használja a SimpleDateFormat-ot
-    	//Formátum: "yyyy.MM.dd"
+       	
         //Ellenõrizze, hogy érvényes-e a vonatszám, és létezik a mozdony.
         //Ellenõrizze, hogy az adott napon nincs másik vonat ugyanezzel a vonatszámmal.		
     	//Hozza létre az új "Vonat" entitást és rögzítse adatbázisban az "ujEntity" metódussal.
         //Növelje a mozdony futottkm-ét a vonatszám szerinti úthosszal. 
     	try {
+    		// hibat dobnak, ha nem lehet
     		int szam = Integer.parseInt(vonatszamAzonosito);
     		int id = Integer.parseInt(mozdonySorszam);
     		int kes = Integer.parseInt(keses);
-    		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
-    		String formated_date = (format.parse(datum)).toString();
     		
-    	} catch (NumberFormatException iave) {
-    		throw new Exception("A parameterben kapott tipus nem megfelelo: " + iave.getMessage());
+    		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+    		Date formated_date = format.parse(datum);
+   
+    		// Vonatszam ellenorzese
+    		Query vaneVonatszam = em.createQuery("SELECT vsz "
+    											+ "FROM Vonatszam vsz "
+    											+ "WHERE vsz.szam = :adottVonatSzam");
+    		vaneVonatszam.setParameter("adottVonatSzam", szam);
+    		
+    		List pVSzam = vaneVonatszam.getResultList(); 
+    		
+    		// ha nincs ilyen szamu vonat, akkor hibat kell dobni
+    		if (pVSzam.isEmpty())
+    			throw new InvalidAttributeValueException("Ilyen azonositoju vonatszam nincs!");
+    		
+    		// Mozdony ellenorzese
+    		Query vaneMozdony = em.createQuery("SELECT m "
+											   + "FROM Mozdony m "
+											   + "WHERE m.id = :adottMozdonyID");
+    		vaneMozdony.setParameter("adottMozdonyID", id);
+    		
+    		List pMozdony = vaneMozdony.getResultList();
+    		
+    		if (pMozdony.isEmpty())
+    			throw new InvalidAttributeValueException("Ilyen azonositoju mozdony nincs!");
+    		
+    		// Datum ellenorzese
+    		Query vaneVonatAznap = em.createQuery("SELECT v "
+					   							+ "FROM Vonat v "
+					   							+ "WHERE v.datum = ?1");
+    		vaneVonatAznap.setParameter(1, formated_date, TemporalType.DATE);
+    		
+    		List pVonat = vaneVonatAznap.getResultList();
+    		
+    		if (!(pVonat.isEmpty())) {
+    			for (Object object : pVonat) {
+					Vonat tmp = (Vonat)object;
+					if (tmp.getSzam().getSzam() == szam && tmp.getMozdony().getId() == id)
+						throw new InvalidAttributeValueException("Mar van vonat beosztva a kijelolt napra!");
+				}
+    		}
+    		
+    		Mozdony m = (Mozdony)pMozdony.get(0);
+    		Vonatszam vsz = (Vonatszam)pVSzam.get(0);
+    		m.setFutottkm( m.getFutottkm() + vsz.getUthossz().intValue() );
+    		// Perzisztalas
+    		ujEntity(new Vonat(id, kes, formated_date, vsz, m));
+    		
+    	} catch (NumberFormatException nfe) {
+    		throw new Exception("A parameterben kapott tipus nem megfelelo: " + nfe.getMessage());
+    	} catch (InvalidAttributeValueException iave) {
+    		throw new Exception("Hiba tortent vonat beszurasakor: " + iave.getMessage());
+    	} catch (IllegalStateException i) {
+    		System.out.println(i.getLocalizedMessage()+" " + i.getMessage());
     	} catch (Exception e) {
     		throw new Exception(e.toString());
     	}  	
