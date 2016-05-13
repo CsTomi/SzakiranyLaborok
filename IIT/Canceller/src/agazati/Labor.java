@@ -1,0 +1,111 @@
+package agazati;
+
+import javax.swing.*;
+import static javax.swing.GroupLayout.Alignment.*;
+import java.awt.event.*;
+import java.beans.*;
+
+
+public class Labor 
+implements Runnable, ActionListener, PropertyChangeListener {
+
+    /* a két updater, ha éppen futnak */
+    Updater u1;
+    Updater u2;
+
+    public Labor() {
+		/* kezdetben nincs munka */
+		u1 = null;
+		u2 = null;
+    }
+
+    /** a gomboktól jövõ események kezelése */
+    public void actionPerformed(ActionEvent e) {
+	/* TODO
+	   gombnyomás kezelése
+
+	   menet közben újrakezdi a futást, cancellálja a szálat (ha kell, 
+	   interrupt-tal).
+	 */
+    }
+
+    /** az updater-ektõl jövõ események kezelése */
+    public void propertyChange(PropertyChangeEvent evt) {
+	/* TODO
+	   Updater-tõl jövõ változásokra frissíti a megfelelõ progressbart,
+	   és ha vége a futásnak, akkor a megfelelõ textfield-be beírja az 
+	   eredményt
+	 */
+    }
+
+    /* az eseménykezelés során elérendõ elemek */
+    JTextField field1;
+    JProgressBar progress1;
+    JTextField field2;
+    JProgressBar progress2;
+
+    /** a frame-et felépítõ kód */
+    public void run() {
+	    	
+		/* frame létrehozása */
+		JFrame f = new JFrame();
+		
+		/* layout hozzárendelése. Még nincs meg a kiosztás!!! */
+		GroupLayout layout = new GroupLayout(f.getContentPane());
+		f.getContentPane().setLayout(layout);
+		layout.setAutoCreateGaps(true);
+	    layout.setAutoCreateContainerGaps(true);
+	
+		/* a felsõ sor elemei */
+		JLabel label1 = new JLabel("First row");
+		field1 = new JTextField(10);
+		progress1 = new JProgressBar(0,99);
+		
+		/*
+		 * Gombok letrehozasa,
+		 * felparameterezese.
+		 */
+		JButton b1 = new JButton("Update");
+		JButton b2 = new JButton("Update");
+		
+		b1.setActionCommand("UPDATE_FIRST");
+		b2.setActionCommand("UPDATE_SECOND");
+		
+		b1.addActionListener(this);
+		b2.addActionListener(this);
+		
+		/* az alsó sor elemei */
+		JLabel label2 = new JLabel("Second row");
+		field2 = new JTextField(10);
+		progress2 = new JProgressBar(0,99);
+		
+		/* TODO
+		   a layout a megfelelõ módon helyezi el az elemeket 
+	
+		   
+		 */
+		layout.addLayoutComponent(label1, null);
+		layout.addLayoutComponent(label2, null);
+		/* a textfield-ek nem nyúlnak függõlegesen */
+		layout.linkSize(SwingConstants.VERTICAL, field1, field2);
+	
+		/* a frame beállítása */
+		f.pack();
+		f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		f.setTitle("Swing Labor");
+		f.setVisible(true);
+	 }	
+	
+    /* Tervezési alap elvek emlékzetetõ:
+     * A logikailag különbözõ elemeket szét kell választani.
+     * Ha lehet, mindent külön fájlba!
+     * Legalábbis nekünk ezt mondták!!
+     * 
+     * Látszik ezen a programon is...
+     * Ja nem.
+     */
+	 static public void main(String[] args) {
+		SwingUtilities.invokeLater(new Labor());	
+    }
+}
+

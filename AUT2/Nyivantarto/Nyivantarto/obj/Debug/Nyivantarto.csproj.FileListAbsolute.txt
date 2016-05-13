@@ -1,0 +1,20 @@
+D:\Users\TALXCE\Nyivantarto\Nyivantarto\bin\Debug\Nyivantarto.exe.config
+D:\Users\TALXCE\Nyivantarto\Nyivantarto\bin\Debug\Nyivantarto.exe
+D:\Users\TALXCE\Nyivantarto\Nyivantarto\bin\Debug\Nyivantarto.pdb
+D:\Users\TALXCE\Nyivantarto\Nyivantarto\bin\Debug\EntityFramework.dll
+D:\Users\TALXCE\Nyivantarto\Nyivantarto\bin\Debug\EntityFramework.SqlServer.dll
+D:\Users\TALXCE\Nyivantarto\Nyivantarto\bin\Debug\EntityFramework.xml
+D:\Users\TALXCE\Nyivantarto\Nyivantarto\bin\Debug\EntityFramework.SqlServer.xml
+D:\Users\TALXCE\Nyivantarto\Nyivantarto\obj\Debug\Nyivantarto.csprojResolveAssemblyReference.cache
+D:\Users\TALXCE\Nyivantarto\Nyivantarto\obj\Debug\Nyivantarto.exe
+D:\Users\TALXCE\Nyivantarto\Nyivantarto\obj\Debug\Nyivantarto.pdb
+C:\Users\Tomi\Documents\MEGA\Szakirány labor 1\AUT2\Nyivantarto\Nyivantarto\bin\Debug\Nyivantarto.exe.config
+C:\Users\Tomi\Documents\MEGA\Szakirány labor 1\AUT2\Nyivantarto\Nyivantarto\obj\Debug\Nyivantarto.exe
+C:\Users\Tomi\Documents\MEGA\Szakirány labor 1\AUT2\Nyivantarto\Nyivantarto\obj\Debug\Nyivantarto.pdb
+C:\Users\Tomi\Documents\MEGA\Szakirány labor 1\AUT2\Nyivantarto\Nyivantarto\bin\Debug\Nyivantarto.exe
+C:\Users\Tomi\Documents\MEGA\Szakirány labor 1\AUT2\Nyivantarto\Nyivantarto\bin\Debug\Nyivantarto.pdb
+C:\Users\Tomi\Documents\MEGA\Szakirány labor 1\AUT2\Nyivantarto\Nyivantarto\bin\Debug\EntityFramework.dll
+C:\Users\Tomi\Documents\MEGA\Szakirány labor 1\AUT2\Nyivantarto\Nyivantarto\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Tomi\Documents\MEGA\Szakirány labor 1\AUT2\Nyivantarto\Nyivantarto\bin\Debug\EntityFramework.xml
+C:\Users\Tomi\Documents\MEGA\Szakirány labor 1\AUT2\Nyivantarto\Nyivantarto\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Tomi\Documents\MEGA\Szakirány labor 1\AUT2\Nyivantarto\Nyivantarto\obj\Debug\Nyivantarto.csprojResolveAssemblyReference.cache

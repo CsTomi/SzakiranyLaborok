@@ -1,0 +1,160 @@
+import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+
+import static javax.swing.GroupLayout.Alignment.*;
+
+import java.awt.event.*;
+import java.beans.*;
+import java.util.concurrent.ExecutionException;
+
+
+public class Labor 
+implements Runnable, ActionListener, PropertyChangeListener {
+
+    /* a két updater, ha éppen futnak */
+    Updater u1;
+    Updater u2;
+    
+    
+    public Labor() {
+	/* kezdetben nincs munka */
+	u1 = null;
+	u2 = null;
+    }
+
+    /** a gomboktól jövõ események kezelése */
+    public void actionPerformed(ActionEvent e) {
+	/* TODO
+	   gombnyomás kezelése
+
+	   menet közben újrakezdi a futást, cancellálja a szálat (ha kell, 
+	   interrupt-tal).
+	 */
+    	if (e.getActionCommand().equals("UPDATE_FIRST")) {
+    		if (u1 != null) {
+    			u1.cancel(true);
+    			u1.removePropertyChangeListener(this);
+    		}
+    		
+    		u1 = new Updater();
+    		u1.addPropertyChangeListener(this);
+        	u1.execute();
+    	}
+    	else if (e.getActionCommand().equals("UPDATE_SECOND")) {
+    		if (u2 != null) {
+    			u2.cancel(true);
+    			u2.removePropertyChangeListener(this);
+    		}
+    		
+    		u2 = new Updater();
+    		u2.addPropertyChangeListener(this);
+    		u2.execute();
+    		
+    	}    	
+    }
+
+    /** az updater-ektõl jövõ események kezelése */
+    public void propertyChange(PropertyChangeEvent evt) {
+	/* TODO
+	   Updater-tõl jövõ változásokra frissíti a megfelelõ progressbart,
+	   és ha vége a futásnak, akkor a megfelelõ textfield-be beírja az 
+	   eredményt
+	 */
+    	System.out.println(evt);
+    	if (evt.getPropertyName().equals("progress")) {
+    		
+    		if (evt.getSource().equals(u1)) {
+    			progress1.setValue((int) evt.getNewValue());
+    			progress1.update(progress1.getGraphics());
+    			
+	    	}
+	    	else if (evt.getSource().equals(u2)) {
+	    		progress2.setValue((int) evt.getNewValue());  
+	    		progress2.update(progress2.getGraphics());
+	    	}
+    	}
+    	else if (evt.getPropertyName().equals("state")){
+    		if(evt.getNewValue() == SwingWorker.StateValue.DONE && evt.getSource().equals(u1) &&!u1.isCancelled()) {
+	    		progress1.setValue(0);
+	    		try {
+					field1.setText(""+u1.get());
+				} catch (InterruptedException | ExecutionException e) {
+					// Do nothing
+				}
+	    	} else if (evt.getNewValue() == SwingWorker.StateValue.DONE && evt.getSource().equals(u2) &&!u2.isCancelled()) {
+	    		progress2.setValue(0);
+	    		try {
+					field2.setText(""+u2.get());
+				} catch (InterruptedException | ExecutionException e) {
+					// Do nothing
+				}
+	    	}
+    	}
+    }
+
+    /* az eseménykezelés során elérendõ elemek */
+    JTextField field1;
+    JProgressBar progress1;
+    JTextField field2;
+    JProgressBar progress2;
+
+    /** a frame-et felépítõ kód */
+    public void run() {
+		/* frame létrehozása */
+		JFrame f = new JFrame();
+		/* layout hozzárendelése. Még nincs meg a kiosztás!!! */
+		GroupLayout layout = new GroupLayout(f.getContentPane());
+		f.getContentPane().setLayout(layout);
+		layout.setAutoCreateGaps(true);
+	        layout.setAutoCreateContainerGaps(true);
+	
+		/* a felsõ sor elemei */
+		JLabel label1 = new JLabel("First row");
+		field1 = new JTextField(10);
+		progress1 = new JProgressBar(0,99);
+		
+		/*
+		 * Gombok letrehozasa,
+		 * felparameterezese.
+		 */
+		JButton b1 = new JButton("Update");
+		JButton b2 = new JButton("Update");
+		
+		b1.setActionCommand("UPDATE_FIRST");
+		b2.setActionCommand("UPDATE_SECOND");
+		
+		b1.addActionListener(this);
+		b2.addActionListener(this);
+	
+		/* az alsó sor elemei */
+		JLabel label2 = new JLabel("Second row");
+		field2 = new JTextField(10);
+		progress2 = new JProgressBar(0,99);
+		
+		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+			hGroup.addGroup(layout.createParallelGroup().addComponent(label1).addComponent(label2));
+			hGroup.addGroup(layout.createParallelGroup().addComponent(field1).addComponent(field2));
+			hGroup.addGroup(layout.createParallelGroup().addComponent(b1).addComponent(b2));
+			hGroup.addGroup(layout.createParallelGroup().addComponent(progress1).addComponent(progress2));
+		layout.setHorizontalGroup(hGroup);
+		
+		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+			vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER).addComponent(label1).addComponent(field1).addComponent(b1).addComponent(progress1));
+			vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER).addComponent(label2).addComponent(field2).addComponent(b2).addComponent(progress2));
+		layout.setVerticalGroup(vGroup);
+	
+		/* a textfield-ek nem nyúlnak függõlegesen */
+		layout.linkSize(SwingConstants.VERTICAL, field1, field2);
+	
+		/* a frame beállítása */
+		f.pack();
+		f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		f.setTitle("Swing Labor");
+		f.setVisible(true);
+    }	
+
+    static public void main(String[] args) {
+    	SwingUtilities.invokeLater(new Labor());	
+    }
+}
+

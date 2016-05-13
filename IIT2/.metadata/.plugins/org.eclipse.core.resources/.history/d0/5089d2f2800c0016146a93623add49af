@@ -1,0 +1,93 @@
+package labor;
+
+import java.nio.channels.SelectableChannel;
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.tree.*;
+
+public class TreeTest {
+    private static FileTreeModel fileTreeModel;
+    private static JComboBox<String> selector;
+    
+    public TreeTest() {
+    	initPathSelector("c:\\");
+    }
+    
+    static public void main(String args[]) {    	
+    	(new TreeTest()).run();
+    }
+    
+    private void initPathSelector(String startRoot) {
+    	//TODO: Inicalizálni kell a Combo Boxot!
+    	// Példa kedvért
+    	
+    	/*Vector<String> roots = new Vector<String>(); // file statikus methódusai
+    	roots.add(startRoot); // lehetne elõtte ellenõrzés, de nagy valszeg nem kell*/
+    	selector = new JComboBox<String>();
+    	selector.addItem(startRoot);
+    	selector.setSelectedIndex(0);
+    	selector.setEditable(true);
+    	selector.setActionCommand("ROOT_CHANGED");
+    	selector.addActionListener(new SelectorListener());
+    }
+    
+    /**
+     * Elindítja az alkalmazást.
+     */
+    public void run() {	
+	    JFrame f = new JFrame("JTree Example");
+	
+		fileTreeModel = new FileTreeModel();
+		fileTreeModel.setRoot(new FileWrap("c:\\"));
+		
+		JTree tree = new JTree(fileTreeModel);
+		tree.setEditable(true);
+		
+		ToolTipManager.sharedInstance().registerComponent(tree);
+		tree.setCellRenderer(new FileTreeRenderer());
+		JScrollPane scrollPane = new JScrollPane(tree);
+		
+		f.add(selector, BorderLayout.NORTH);
+		f.add(scrollPane, BorderLayout.CENTER);
+		f.setDefaultCloseOperation(f.EXIT_ON_CLOSE);
+		f.setLocation(100, 100);
+		f.setPreferredSize(new Dimension(280, 400));
+		f.pack(); // Optimalizálja a méretét az ablaknak.
+		f.setVisible(true);
+    }
+    
+    /**
+     * Ki kellett szervezni egy külön osztályba.
+     * @author Tomi
+     *
+     */
+    private class SelectorListener implements ActionListener {
+    	
+    	String prevPath = selector.getItemAt(0);
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			if (e.getActionCommand().equals("ROOT_CHANGED")) {
+				FileWrap tempRoot = new FileWrap((String)selector.getEditor().getItem());
+				if (fileTreeModel.setRoot(tempRoot)) {
+					selector.setSelectedItem(tempRoot.getPath());
+					prevPath = tempRoot.getPath();
+					
+					for(int i = 0; i < selector.getItemCount(); ++i) {
+						if (!selector.getItemAt(i).equals(prevPath))
+							selector.addItem(prevPath);
+					}
+					
+				} else {
+					selector.setSelectedItem(prevPath);
+				}
+			}
+		}
+    	
+    }
+}

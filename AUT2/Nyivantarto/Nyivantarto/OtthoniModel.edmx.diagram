@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5cd53e3e0a0b40fdab9860d8d4f1f7d6" Name="Diagram1" ZoomLevel="88">
+        <EntityTypeShape EntityType="TALXCEModel.AFA" Width="1.5" PointX="6.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TALXCEModel.FizetesMod" Width="1.5" PointX="0.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TALXCEModel.Kategoria" Width="1.5" PointX="6.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TALXCEModel.Megrendeles" Width="1.5" PointX="3.375" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TALXCEModel.MegrendelesTetel" Width="1.5" PointX="3.375" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TALXCEModel.Statusz" Width="1.5" PointX="0.625" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TALXCEModel.Szamla" Width="1.5" PointX="8.125" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TALXCEModel.SzamlaKiallito" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TALXCEModel.SzamlaTetel" Width="1.5" PointX="10.375" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TALXCEModel.Telephely" Width="1.5" PointX="1.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TALXCEModel.Termek" Width="1.5" PointX="8.5" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TALXCEModel.Vevo" Width="3" PointX="2.625" PointY="9.25" IsExpanded="true" />
+        <AssociationConnector Association="TALXCEModel.FK__Termek__AFAID__3587F3E0" ManuallyRouted="false" />
+        <AssociationConnector Association="TALXCEModel.FK__Megrendel__Fizet__40F9A68C" ManuallyRouted="false" />
+        <AssociationConnector Association="TALXCEModel.FK__Kategoria__Szulo__32AB8735" ManuallyRouted="false" />
+        <AssociationConnector Association="TALXCEModel.FK__Termek__Kategori__367C1819" ManuallyRouted="false" />
+        <AssociationConnector Association="TALXCEModel.FK__Megrendel__Megre__43D61337" ManuallyRouted="false" />
+        <AssociationConnector Association="TALXCEModel.FK__Megrendel__Statu__40058253" ManuallyRouted="false" />
+        <AssociationConnector Association="TALXCEModel.FK__Megrendel__Telep__3F115E1A" ManuallyRouted="false" />
+        <AssociationConnector Association="TALXCEModel.FK__Szamla__Megrende__4B7734FF" ManuallyRouted="false" />
+        <AssociationConnector Association="TALXCEModel.FK__Megrendel__Statu__45BE5BA9" ManuallyRouted="false" />
+        <AssociationConnector Association="TALXCEModel.FK__Megrendel__Terme__44CA3770" ManuallyRouted="false" />
+        <AssociationConnector Association="TALXCEModel.FK__SzamlaTet__Megre__4F47C5E3" ManuallyRouted="false" />
+        <AssociationConnector Association="TALXCEModel.FK__Szamla__Kiallito__4A8310C6" ManuallyRouted="false" />
+        <AssociationConnector Association="TALXCEModel.FK__SzamlaTet__Szaml__4E53A1AA" ManuallyRouted="false" />
+        <AssociationConnector Association="TALXCEModel.FK__Telephely__VevoI__3B40CD36" ManuallyRouted="false" />
+        <AssociationConnector Association="TALXCEModel.Vevo_KozpontiTelephely" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TALXCEModel.AFAMentesSzamlaTetel" Width="1.5" PointX="12.375" PointY="2" />
+        <InheritanceConnector EntityType="TALXCEModel.AFAMentesSzamlaTetel" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

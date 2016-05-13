@@ -1,0 +1,2 @@
+INDEX VERSION 1.127+C:\Users\Tomi\Documents\MEGA\Szakirány labor 1\IIT\.metadata\.plugins\org.eclipse.jdt.core
+2348992267.index

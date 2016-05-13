@@ -1,0 +1,89 @@
+package labor;
+
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.tree.*;
+
+class FileTreeModel implements TreeModel {
+    private ArrayList<TreeModelListener> listeners;
+    private FileWrap root;
+    
+    public FileTreeModel() {
+		this.listeners = new ArrayList<TreeModelListener>();
+		this.root = new FileWrap();
+    }
+    
+    public void addTreeModelListener(TreeModelListener l){
+    	listeners.add(l);
+    }
+    
+    public void removeTreeModelListener(TreeModelListener l){
+    	listeners.remove(l);
+    }
+    
+    public Object getChild(Object parent, int index){
+		FileWrap bt = (FileWrap)parent;
+		if (bt == null) return null;
+		String[] children = bt.list();
+		return new FileWarp(new File(bt, children[index]) );
+	}
+    
+    public int getChildCount(Object parent){
+    	FileWrap bt = (FileWrap)parent;
+		if (bt == null) return 0;
+		if (bt.isDirectory()) {
+			String[] fileList = bt.list();
+			if (fileList != null)
+				return fileList.length;
+		}
+		return 0;
+    }
+    
+    public int getIndexOfChild(Object parent, Object child){
+		FileWrap bt = (FileWrap)parent;
+		int n = -1;
+		if (bt == null) return n;
+		return n;
+    }
+    
+    public Object getRoot(){
+    	return this.root;
+    }
+    
+    /**
+     * Set's the new root.
+     * @param newRoot The new root of the file tree.
+     * @throws Exception 
+     */
+    public void setRoot(Object newRoot) {
+    	if (newRoot != null) {
+    		this.root = (FileWrap) newRoot;
+        } else {
+        	this.root = new FileWrap("c:\\");
+        }
+    	
+    	System.out.println("Set Root method - " + root);
+    	//View értesítés
+    	for (TreeModelListener listener : listeners) {
+			listener.treeStructureChanged(new TreeModelEvent(this, new TreePath(this.root)));
+		}
+	
+    }
+    
+    public boolean isLeaf(Object node){ //aki nem directory
+    	//TODO Cast Exceptiont dob. Miért??
+    	FileWrap bt = (FileWrap)node;
+    	System.out.println(node.getClass() + "; " + node.toString());
+    	return (bt.isFile());
+    }
+    
+    //1.7-es java!
+    
+    public void valueForPathChanged(TreePath path, Object newValue){
+    	
+    }
+}

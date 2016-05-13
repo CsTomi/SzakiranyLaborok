@@ -1,0 +1,67 @@
+package labor;
+
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.tree.*;
+import java.io.File;
+
+class FileWrap {
+
+	private File value;
+    FileWrap left;
+    FileWrap right;
+
+    public FileWrap() {
+		value = new File("C:\\");
+		left = null;
+		right = null;
+    }
+
+    public FileWrap(String path) {
+		value = new File(path);
+		left = new FileWrap();
+		right = new FileWrap();
+    }
+    
+    public ArrayList<FileWrap> insert(double d) {
+		ArrayList<FileWrap> path;
+		if (isNull()) {
+		    value = d;
+		    left = new FileWrap();
+		    right = new FileWrap();
+		    path = new ArrayList<FileWrap>();
+		    path.add(left);
+		} else {
+		    if (d < value) {
+		    	path = left.insert(d);
+		    } else {
+		    	path = right.insert(d);
+		    }
+		}
+	     	path.add(0, this);
+		return path;
+    }
+    
+    @Override
+    public String toString() {
+		return value.getName();
+    }
+    
+    public boolean isNull() {
+    	return (left == null);
+    }
+    
+    public int getDepth() {
+		if (isNull()) { return 1; }
+
+		int l = left.getDepth();
+		int r = right.getDepth();
+		int m = (l>r) ? l : r;
+		return m+1;
+    }
+}
+
+

@@ -1,0 +1,111 @@
+package labor;
+
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.tree.*;
+
+class FileTreeModel implements TreeModel {
+    private ArrayList<TreeModelListener> listeners;
+    private FileWrap root;
+    
+    public FileTreeModel() {
+		this.listeners = new ArrayList<TreeModelListener>();
+		this.root = new FileWrap();
+    }
+    
+    public void addTreeModelListener(TreeModelListener l){
+    	listeners.add(l);
+    }
+    
+    public void removeTreeModelListener(TreeModelListener l){
+    	listeners.remove(l);
+    }
+    
+    public Object getChild(Object parent, int index){
+		FileWrap bt = (FileWrap)parent;
+		
+		if (bt == null) return null;
+		
+		String[] children = bt.list();
+		Arrays.sort(children);
+		return new FileWrap(new java.io.File(bt.getName(), children[index]));
+	}
+    
+    public int getChildCount(Object parent){
+    	FileWrap bt = (FileWrap)parent;
+		if (bt == null) return 0;
+		if (bt.isDirectory()) {
+			String[] fileList = bt.list(); // Itt semmi értelme a randezésnek
+			if (fileList != null)
+				return fileList.length;
+		}
+		return 0;
+    }
+    
+    public int getIndexOfChild(Object parent, Object child){
+		FileWrap par = (FileWrap)parent;
+		FileWrap chi = (FileWrap)child;
+		
+		if (par == null) return -1;
+		if (chi == null) return -1;
+		
+		String[] list = par.list();
+		Arrays.sort(list);
+		for (int i = 0; i < list.length; i++) {
+			if (chi.getName().equals(list[i]))
+				return i;
+		}
+		return -1;
+    }
+    
+    public Object getRoot(){
+    	return this.root;
+    }
+    
+    /**
+     * Set's the new root.
+     * @param newRoot The new root of the file tree.
+     * @throws Exception 
+     */
+    public void setRoot(Object newRoot) {
+    	if (newRoot != null) {
+    		this.root = (FileWrap) newRoot;
+        } else {
+        	this.root = new FileWrap("c:\\");
+        }
+    	//View értesítés
+    	for (TreeModelListener listener : listeners) {
+			listener.treeStructureChanged(new TreeModelEvent(this, new TreePath(this.root)));
+		}
+    }
+    
+    public boolean isLeaf(Object node){ //aki nem directory
+    	FileWrap bt = (FileWrap)node;
+    	return (!bt.isDirectory());
+    }
+    
+    //1.7-es java!
+    
+    public void valueForPathChanged(TreePath path, Object newValue){
+    	FileWrap oldFile = (FileWrap) path.getLastPathComponent();
+        
+    	String fileParentPath = oldFile.getParent();
+        String newFileName = (String)newValue;
+        
+        FileWrap targetFile = new FileWrap(new java.io.File(fileParentPath, newFileName));
+        
+        oldFile.renameTo(targetFile.getFile());
+        FileWrap parent = new FileWrap(fileParentPath);
+        
+        int[] changedChildrenIndices = { getIndexOfChild(parent, targetFile) };
+        Object[] changedChildren = { targetFile };
+        
+        for (TreeModelListener listener : listeners) {
+			listener.treeStructureChanged(new TreeModelEvent(path.getParentPath(), changedChildren, changedChildrenIndices, changedChildren));
+		}
+    }
+}

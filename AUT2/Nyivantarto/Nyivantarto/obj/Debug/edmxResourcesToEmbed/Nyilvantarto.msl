@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ITLABOR1ModelStoreContainer" CdmEntityContainer="LABOREntities">
+    <EntitySetMapping Name="AFA">
+      <EntityTypeMapping TypeName="ITLABOR1Model.AFA">
+        <MappingFragment StoreEntitySet="AFA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Kulcs" ColumnName="Kulcs" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FizetesMod">
+      <EntityTypeMapping TypeName="ITLABOR1Model.FizetesMod">
+        <MappingFragment StoreEntitySet="FizetesMod">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Mod" ColumnName="Mod" />
+          <ScalarProperty Name="Hatarido" ColumnName="Hatarido" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kategoria">
+      <EntityTypeMapping TypeName="ITLABOR1Model.Kategoria">
+        <MappingFragment StoreEntitySet="Kategoria">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Nev" ColumnName="Nev" />
+          <ScalarProperty Name="SzuloKategoria" ColumnName="SzuloKategoria" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Megrendeles">
+      <EntityTypeMapping TypeName="ITLABOR1Model.Megrendeles">
+        <MappingFragment StoreEntitySet="Megrendeles">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Datum" ColumnName="Datum" />
+          <ScalarProperty Name="Hatarido" ColumnName="Hatarido" />
+          <ScalarProperty Name="TelephelyID" ColumnName="TelephelyID" />
+          <ScalarProperty Name="StatuszID" ColumnName="StatuszID" />
+          <ScalarProperty Name="FizetesModID" ColumnName="FizetesModID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MegrendelesTetel">
+      <EntityTypeMapping TypeName="ITLABOR1Model.MegrendelesTetel">
+        <MappingFragment StoreEntitySet="MegrendelesTetel">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Mennyiseg" ColumnName="Mennyiseg" />
+          <ScalarProperty Name="NettoAr" ColumnName="NettoAr" />
+          <ScalarProperty Name="MegrendelesID" ColumnName="MegrendelesID" />
+          <ScalarProperty Name="TermekID" ColumnName="TermekID" />
+          <ScalarProperty Name="StatuszID" ColumnName="StatuszID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Statusz">
+      <EntityTypeMapping TypeName="ITLABOR1Model.Statusz">
+        <MappingFragment StoreEntitySet="Statusz">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Nev" ColumnName="Nev" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="ITLABOR1Model.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Szamla">
+      <EntityTypeMapping TypeName="ITLABOR1Model.Szamla">
+        <MappingFragment StoreEntitySet="Szamla">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MegrendeloNev" ColumnName="MegrendeloNev" />
+          <ScalarProperty Name="MegrendeloIR" ColumnName="MegrendeloIR" />
+          <ScalarProperty Name="MegrendeloVaros" ColumnName="MegrendeloVaros" />
+          <ScalarProperty Name="MegrendeloUtca" ColumnName="MegrendeloUtca" />
+          <ScalarProperty Name="NyomtatottPeldanyszam" ColumnName="NyomtatottPeldanyszam" />
+          <ScalarProperty Name="Sztorno" ColumnName="Sztorno" />
+          <ScalarProperty Name="FizetesiMod" ColumnName="FizetesiMod" />
+          <ScalarProperty Name="KiallitasDatum" ColumnName="KiallitasDatum" />
+          <ScalarProperty Name="TeljesitesDatum" ColumnName="TeljesitesDatum" />
+          <ScalarProperty Name="FizetesiHatarido" ColumnName="FizetesiHatarido" />
+          <ScalarProperty Name="KiallitoID" ColumnName="KiallitoID" />
+          <ScalarProperty Name="MegrendelesID" ColumnName="MegrendelesID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SzamlaKiallito">
+      <EntityTypeMapping TypeName="ITLABOR1Model.SzamlaKiallito">
+        <MappingFragment StoreEntitySet="SzamlaKiallito">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Nev" ColumnName="Nev" />
+          <ScalarProperty Name="IR" ColumnName="IR" />
+          <ScalarProperty Name="Varos" ColumnName="Varos" />
+          <ScalarProperty Name="Utca" ColumnName="Utca" />
+          <ScalarProperty Name="Adoszam" ColumnName="Adoszam" />
+          <ScalarProperty Name="Szamlaszam" ColumnName="Szamlaszam" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SzamlaTetel">
+      <EntityTypeMapping TypeName="IsTypeOf(ITLABOR1Model.SzamlaTetel)">
+        <MappingFragment StoreEntitySet="SzamlaTetel">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MegrendelesTetelID" ColumnName="MegrendelesTetelID" />
+          <ScalarProperty Name="SzamlaID" ColumnName="SzamlaID" />
+          <ScalarProperty Name="NettoAr" ColumnName="NettoAr" />
+          <ScalarProperty Name="Mennyiseg" ColumnName="Mennyiseg" />
+          <ScalarProperty Name="Nev" ColumnName="Nev" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(ITLABOR1Model.AfaMentesSzamlaTetel)">
+        <MappingFragment StoreEntitySet="SzamlaTetel">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <Condition ColumnName="AFAKulcs" Value="0" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Telephely">
+      <EntityTypeMapping TypeName="ITLABOR1Model.Telephely">
+        <MappingFragment StoreEntitySet="Telephely">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="IR" ColumnName="IR" />
+          <ScalarProperty Name="Varos" ColumnName="Varos" />
+          <ScalarProperty Name="Utca" ColumnName="Utca" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="VevoID" ColumnName="VevoID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Termek">
+      <EntityTypeMapping TypeName="ITLABOR1Model.Termek">
+        <MappingFragment StoreEntitySet="Termek">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Nev" ColumnName="Nev" />
+          <ScalarProperty Name="NettoAr" ColumnName="NettoAr" />
+          <ScalarProperty Name="Raktarkeszlet" ColumnName="Raktarkeszlet" />
+          <ScalarProperty Name="AFAID" ColumnName="AFAID" />
+          <ScalarProperty Name="KategoriaID" ColumnName="KategoriaID" />
+          <ScalarProperty Name="Leiras" ColumnName="Leiras" />
+          <ScalarProperty Name="Kep" ColumnName="Kep" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vevo">
+      <EntityTypeMapping TypeName="ITLABOR1Model.Vevo">
+        <MappingFragment StoreEntitySet="Vevo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Nev" ColumnName="Nev" />
+          <ScalarProperty Name="Szamlaszam" ColumnName="Szamlaszam" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Jelszo" ColumnName="Jelszo" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="KozpontiTelephelyID" ColumnName="KozpontiTelephely" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

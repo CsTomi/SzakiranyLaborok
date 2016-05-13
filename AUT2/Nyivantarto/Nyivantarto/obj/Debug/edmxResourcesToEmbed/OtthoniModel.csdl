@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TALXCEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AFA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Kulcs" Type="Int32" />
+    <NavigationProperty Name="Termek" Relationship="Self.FK__Termek__AFAID__3587F3E0" FromRole="AFA" ToRole="Termek" />
+  </EntityType>
+  <EntityType Name="FizetesMod">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Mod" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Hatarido" Type="Int32" />
+    <NavigationProperty Name="Megrendeles" Relationship="Self.FK__Megrendel__Fizet__40F9A68C" FromRole="FizetesMod" ToRole="Megrendeles" />
+  </EntityType>
+  <EntityType Name="Kategoria">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nev" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SzuloKategoria" Type="Int32" />
+    <NavigationProperty Name="Kategoria1" Relationship="Self.FK__Kategoria__Szulo__32AB8735" FromRole="Kategoria" ToRole="Kategoria1" />
+    <NavigationProperty Name="Kategoria2" Relationship="Self.FK__Kategoria__Szulo__32AB8735" FromRole="Kategoria1" ToRole="Kategoria" />
+    <NavigationProperty Name="Termek" Relationship="Self.FK__Termek__Kategori__367C1819" FromRole="Kategoria" ToRole="Termek" />
+  </EntityType>
+  <EntityType Name="Megrendeles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Datum" Type="DateTime" Precision="3" />
+    <Property Name="Hatarido" Type="DateTime" Precision="3" />
+    <Property Name="TelephelyID" Type="Int32" />
+    <Property Name="StatuszID" Type="Int32" />
+    <Property Name="FizetesModID" Type="Int32" />
+    <NavigationProperty Name="FizetesMod" Relationship="Self.FK__Megrendel__Fizet__40F9A68C" FromRole="Megrendeles" ToRole="FizetesMod" />
+    <NavigationProperty Name="MegrendelesTetel" Relationship="Self.FK__Megrendel__Megre__43D61337" FromRole="Megrendeles" ToRole="MegrendelesTetel" />
+    <NavigationProperty Name="Statusz" Relationship="Self.FK__Megrendel__Statu__40058253" FromRole="Megrendeles" ToRole="Statusz" />
+    <NavigationProperty Name="Telephely" Relationship="Self.FK__Megrendel__Telep__3F115E1A" FromRole="Megrendeles" ToRole="Telephely" />
+    <NavigationProperty Name="Szamla" Relationship="Self.FK__Szamla__Megrende__4B7734FF" FromRole="Megrendeles" ToRole="Szamla" />
+  </EntityType>
+  <EntityType Name="MegrendelesTetel">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Mennyiseg" Type="Int32" />
+    <Property Name="NettoAr" Type="Double" />
+    <Property Name="MegrendelesID" Type="Int32" />
+    <Property Name="TermekID" Type="Int32" />
+    <Property Name="StatuszID" Type="Int32" />
+    <NavigationProperty Name="Megrendeles" Relationship="Self.FK__Megrendel__Megre__43D61337" FromRole="MegrendelesTetel" ToRole="Megrendeles" />
+    <NavigationProperty Name="Statusz" Relationship="Self.FK__Megrendel__Statu__45BE5BA9" FromRole="MegrendelesTetel" ToRole="Statusz" />
+    <NavigationProperty Name="Termek" Relationship="Self.FK__Megrendel__Terme__44CA3770" FromRole="MegrendelesTetel" ToRole="Termek" />
+    <NavigationProperty Name="SzamlaTetel" Relationship="Self.FK__SzamlaTet__Megre__4F47C5E3" FromRole="MegrendelesTetel" ToRole="SzamlaTetel" />
+  </EntityType>
+  <EntityType Name="Statusz">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nev" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Megrendeles" Relationship="Self.FK__Megrendel__Statu__40058253" FromRole="Statusz" ToRole="Megrendeles" />
+    <NavigationProperty Name="MegrendelesTetel" Relationship="Self.FK__Megrendel__Statu__45BE5BA9" FromRole="Statusz" ToRole="MegrendelesTetel" />
+  </EntityType>
+  <EntityType Name="Szamla">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="MegrendeloNev" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MegrendeloIR" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+    <Property Name="MegrendeloVaros" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MegrendeloUtca" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NyomtatottPeldanyszam" Type="Int32" />
+    <Property Name="Sztorno" Type="Boolean" />
+    <Property Name="FizetesiMod" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="KiallitasDatum" Type="DateTime" Precision="3" />
+    <Property Name="TeljesitesDatum" Type="DateTime" Precision="3" />
+    <Property Name="FizetesiHatarido" Type="DateTime" Precision="3" />
+    <Property Name="KiallitoID" Type="Int32" />
+    <Property Name="MegrendelesID" Type="Int32" />
+    <NavigationProperty Name="Megrendeles" Relationship="Self.FK__Szamla__Megrende__4B7734FF" FromRole="Szamla" ToRole="Megrendeles" />
+    <NavigationProperty Name="SzamlaKiallito" Relationship="Self.FK__Szamla__Kiallito__4A8310C6" FromRole="Szamla" ToRole="SzamlaKiallito" />
+    <NavigationProperty Name="SzamlaTetel" Relationship="Self.FK__SzamlaTet__Szaml__4E53A1AA" FromRole="Szamla" ToRole="SzamlaTetel" />
+  </EntityType>
+  <EntityType Name="SzamlaKiallito">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nev" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IR" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+    <Property Name="Varos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Utca" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Adoszam" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Szamlaszam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Szamla" Relationship="Self.FK__Szamla__Kiallito__4A8310C6" FromRole="SzamlaKiallito" ToRole="Szamla" />
+  </EntityType>
+  <EntityType Name="SzamlaTetel">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nev" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Mennyiseg" Type="Int32" />
+    <Property Name="NettoAr" Type="Double" />
+    <Property Name="SzamlaID" Type="Int32" />
+    <Property Name="MegrendelesTetelID" Type="Int32" />
+    <NavigationProperty Name="MegrendelesTetel" Relationship="Self.FK__SzamlaTet__Megre__4F47C5E3" FromRole="SzamlaTetel" ToRole="MegrendelesTetel" />
+    <NavigationProperty Name="Szamla" Relationship="Self.FK__SzamlaTet__Szaml__4E53A1AA" FromRole="SzamlaTetel" ToRole="Szamla" />
+  </EntityType>
+  <EntityType Name="Telephely">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IR" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+    <Property Name="Varos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Utca" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Tel" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Fax" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="VevoID" Type="Int32" />
+    <NavigationProperty Name="Megrendeles" Relationship="Self.FK__Megrendel__Telep__3F115E1A" FromRole="Telephely" ToRole="Megrendeles" />
+    <NavigationProperty Name="Vevo" Relationship="Self.FK__Telephely__VevoI__3B40CD36" FromRole="Telephely" ToRole="Vevo" />
+    <NavigationProperty Name="Vevo1" Relationship="Self.Vevo_KozpontiTelephely" FromRole="Telephely" ToRole="Vevo" />
+  </EntityType>
+  <EntityType Name="Termek">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nev" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NettoAr" Type="Double" />
+    <Property Name="Raktarkeszlet" Type="Int32" />
+    <Property Name="AFAID" Type="Int32" />
+    <Property Name="KategoriaID" Type="Int32" />
+    <Property Name="Leiras" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Kep" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="AFA" Relationship="Self.FK__Termek__AFAID__3587F3E0" FromRole="Termek" ToRole="AFA" />
+    <NavigationProperty Name="Kategoria" Relationship="Self.FK__Termek__Kategori__367C1819" FromRole="Termek" ToRole="Kategoria" />
+    <NavigationProperty Name="MegrendelesTetel" Relationship="Self.FK__Megrendel__Terme__44CA3770" FromRole="Termek" ToRole="MegrendelesTetel" />
+  </EntityType>
+  <EntityType Name="Vevo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nev" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Szamlaszam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Jelszo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="KozpontiTelephelyID" Type="Int32" />
+    <NavigationProperty Name="Telephely" Relationship="Self.FK__Telephely__VevoI__3B40CD36" FromRole="Vevo" ToRole="Telephely" />
+    <NavigationProperty Name="KozpontiTelephely" Relationship="Self.Vevo_KozpontiTelephely" FromRole="Vevo" ToRole="Telephely" />
+  </EntityType>
+  <Association Name="FK__Termek__AFAID__3587F3E0">
+    <End Role="AFA" Type="Self.AFA" Multiplicity="0..1" />
+    <End Role="Termek" Type="Self.Termek" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AFA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Termek">
+        <PropertyRef Name="AFAID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Megrendel__Fizet__40F9A68C">
+    <End Role="FizetesMod" Type="Self.FizetesMod" Multiplicity="0..1" />
+    <End Role="Megrendeles" Type="Self.Megrendeles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FizetesMod">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Megrendeles">
+        <PropertyRef Name="FizetesModID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Kategoria__Szulo__32AB8735">
+    <End Role="Kategoria" Type="Self.Kategoria" Multiplicity="0..1" />
+    <End Role="Kategoria1" Type="Self.Kategoria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategoria">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Kategoria1">
+        <PropertyRef Name="SzuloKategoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Termek__Kategori__367C1819">
+    <End Role="Kategoria" Type="Self.Kategoria" Multiplicity="0..1" />
+    <End Role="Termek" Type="Self.Termek" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategoria">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Termek">
+        <PropertyRef Name="KategoriaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Megrendel__Megre__43D61337">
+    <End Role="Megrendeles" Type="Self.Megrendeles" Multiplicity="0..1" />
+    <End Role="MegrendelesTetel" Type="Self.MegrendelesTetel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Megrendeles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MegrendelesTetel">
+        <PropertyRef Name="MegrendelesID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Megrendel__Statu__40058253">
+    <End Role="Statusz" Type="Self.Statusz" Multiplicity="0..1" />
+    <End Role="Megrendeles" Type="Self.Megrendeles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Statusz">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Megrendeles">
+        <PropertyRef Name="StatuszID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Megrendel__Telep__3F115E1A">
+    <End Role="Telephely" Type="Self.Telephely" Multiplicity="0..1" />
+    <End Role="Megrendeles" Type="Self.Megrendeles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Telephely">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Megrendeles">
+        <PropertyRef Name="TelephelyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Szamla__Megrende__4B7734FF">
+    <End Role="Megrendeles" Type="Self.Megrendeles" Multiplicity="0..1" />
+    <End Role="Szamla" Type="Self.Szamla" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Megrendeles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Szamla">
+        <PropertyRef Name="MegrendelesID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Megrendel__Statu__45BE5BA9">
+    <End Role="Statusz" Type="Self.Statusz" Multiplicity="0..1" />
+    <End Role="MegrendelesTetel" Type="Self.MegrendelesTetel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Statusz">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MegrendelesTetel">
+        <PropertyRef Name="StatuszID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Megrendel__Terme__44CA3770">
+    <End Role="Termek" Type="Self.Termek" Multiplicity="0..1" />
+    <End Role="MegrendelesTetel" Type="Self.MegrendelesTetel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Termek">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MegrendelesTetel">
+        <PropertyRef Name="TermekID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SzamlaTet__Megre__4F47C5E3">
+    <End Role="MegrendelesTetel" Type="Self.MegrendelesTetel" Multiplicity="0..1" />
+    <End Role="SzamlaTetel" Type="Self.SzamlaTetel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MegrendelesTetel">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SzamlaTetel">
+        <PropertyRef Name="MegrendelesTetelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Szamla__Kiallito__4A8310C6">
+    <End Role="SzamlaKiallito" Type="Self.SzamlaKiallito" Multiplicity="0..1" />
+    <End Role="Szamla" Type="Self.Szamla" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SzamlaKiallito">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Szamla">
+        <PropertyRef Name="KiallitoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SzamlaTet__Szaml__4E53A1AA">
+    <End Role="Szamla" Type="Self.Szamla" Multiplicity="0..1" />
+    <End Role="SzamlaTetel" Type="Self.SzamlaTetel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Szamla">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SzamlaTetel">
+        <PropertyRef Name="SzamlaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Telephely__VevoI__3B40CD36">
+    <End Role="Vevo" Type="Self.Vevo" Multiplicity="0..1" />
+    <End Role="Telephely" Type="Self.Telephely" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vevo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Telephely">
+        <PropertyRef Name="VevoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Vevo_KozpontiTelephely">
+    <End Role="Telephely" Type="Self.Telephely" Multiplicity="0..1" />
+    <End Role="Vevo" Type="Self.Vevo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Telephely">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Vevo">
+        <PropertyRef Name="KozpontiTelephelyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TALXCEEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AFA" EntityType="Self.AFA" />
+    <EntitySet Name="FizetesMod" EntityType="Self.FizetesMod" />
+    <EntitySet Name="Kategoria" EntityType="Self.Kategoria" />
+    <EntitySet Name="Megrendeles" EntityType="Self.Megrendeles" />
+    <EntitySet Name="MegrendelesTetel" EntityType="Self.MegrendelesTetel" />
+    <EntitySet Name="Statusz" EntityType="Self.Statusz" />
+    <EntitySet Name="Szamla" EntityType="Self.Szamla" />
+    <EntitySet Name="SzamlaKiallito" EntityType="Self.SzamlaKiallito" />
+    <EntitySet Name="SzamlaTetel" EntityType="Self.SzamlaTetel" />
+    <EntitySet Name="Telephely" EntityType="Self.Telephely" />
+    <EntitySet Name="Termek" EntityType="Self.Termek" />
+    <EntitySet Name="Vevo" EntityType="Self.Vevo" />
+    <AssociationSet Name="FK__Termek__AFAID__3587F3E0" Association="Self.FK__Termek__AFAID__3587F3E0">
+      <End Role="AFA" EntitySet="AFA" />
+      <End Role="Termek" EntitySet="Termek" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Megrendel__Fizet__40F9A68C" Association="Self.FK__Megrendel__Fizet__40F9A68C">
+      <End Role="FizetesMod" EntitySet="FizetesMod" />
+      <End Role="Megrendeles" EntitySet="Megrendeles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Kategoria__Szulo__32AB8735" Association="Self.FK__Kategoria__Szulo__32AB8735">
+      <End Role="Kategoria" EntitySet="Kategoria" />
+      <End Role="Kategoria1" EntitySet="Kategoria" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Termek__Kategori__367C1819" Association="Self.FK__Termek__Kategori__367C1819">
+      <End Role="Kategoria" EntitySet="Kategoria" />
+      <End Role="Termek" EntitySet="Termek" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Megrendel__Megre__43D61337" Association="Self.FK__Megrendel__Megre__43D61337">
+      <End Role="Megrendeles" EntitySet="Megrendeles" />
+      <End Role="MegrendelesTetel" EntitySet="MegrendelesTetel" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Megrendel__Statu__40058253" Association="Self.FK__Megrendel__Statu__40058253">
+      <End Role="Statusz" EntitySet="Statusz" />
+      <End Role="Megrendeles" EntitySet="Megrendeles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Megrendel__Telep__3F115E1A" Association="Self.FK__Megrendel__Telep__3F115E1A">
+      <End Role="Telephely" EntitySet="Telephely" />
+      <End Role="Megrendeles" EntitySet="Megrendeles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Szamla__Megrende__4B7734FF" Association="Self.FK__Szamla__Megrende__4B7734FF">
+      <End Role="Megrendeles" EntitySet="Megrendeles" />
+      <End Role="Szamla" EntitySet="Szamla" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Megrendel__Statu__45BE5BA9" Association="Self.FK__Megrendel__Statu__45BE5BA9">
+      <End Role="Statusz" EntitySet="Statusz" />
+      <End Role="MegrendelesTetel" EntitySet="MegrendelesTetel" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Megrendel__Terme__44CA3770" Association="Self.FK__Megrendel__Terme__44CA3770">
+      <End Role="Termek" EntitySet="Termek" />
+      <End Role="MegrendelesTetel" EntitySet="MegrendelesTetel" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SzamlaTet__Megre__4F47C5E3" Association="Self.FK__SzamlaTet__Megre__4F47C5E3">
+      <End Role="MegrendelesTetel" EntitySet="MegrendelesTetel" />
+      <End Role="SzamlaTetel" EntitySet="SzamlaTetel" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Szamla__Kiallito__4A8310C6" Association="Self.FK__Szamla__Kiallito__4A8310C6">
+      <End Role="SzamlaKiallito" EntitySet="SzamlaKiallito" />
+      <End Role="Szamla" EntitySet="Szamla" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SzamlaTet__Szaml__4E53A1AA" Association="Self.FK__SzamlaTet__Szaml__4E53A1AA">
+      <End Role="Szamla" EntitySet="Szamla" />
+      <End Role="SzamlaTetel" EntitySet="SzamlaTetel" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Telephely__VevoI__3B40CD36" Association="Self.FK__Telephely__VevoI__3B40CD36">
+      <End Role="Vevo" EntitySet="Vevo" />
+      <End Role="Telephely" EntitySet="Telephely" />
+    </AssociationSet>
+    <AssociationSet Name="Vevo_KozpontiTelephely" Association="Self.Vevo_KozpontiTelephely">
+      <End Role="Telephely" EntitySet="Telephely" />
+      <End Role="Vevo" EntitySet="Vevo" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="AFAMentesSzamlaTetel" BaseType="TALXCEModel.SzamlaTetel" />
+</Schema>

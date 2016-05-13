@@ -1,0 +1,42 @@
+import javax.swing.*;
+
+public class Updater extends SwingWorker<Double, Object> {
+
+    public Double doInBackground() {
+	/* TODO
+
+	   Calculator példány létrehozása.
+
+	   ciklus, amíg a calculator work() metódusa 100-nál kisebb értékkel 
+	   tér vissza. Ezt az értéket fel kell használni a progress 
+	   állításához.
+
+	   ha futás közben cancellálnak (isCancelled() true), akkor
+	   meg kell szakítani a futást.
+
+	   A végén vissza kell adni a számítás eredményét (calculator
+	   get() metódusa).
+
+	 */
+    	
+    	Calculator calc = new Calculator();
+		
+		try {
+			int x = 0;
+			while(x < 100) { // Hiba kezelés			
+				x = calc.work();
+				
+				if (isCancelled())
+					break;
+				
+				this.setProgress(x); // fire property changed	
+				this.firePropertyChange("Work!!!!!!", null, x);
+			}
+			return calc.get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0.0;
+		}
+    }
+}

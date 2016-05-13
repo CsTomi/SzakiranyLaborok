@@ -1,0 +1,66 @@
+package labor;
+
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.tree.*;
+
+class BinTree {
+
+    double value;
+    FileWrap left;
+    FileWrap right;
+
+    public BinTree() {
+		value = 0;
+		left = null;
+		right = null;
+    }
+
+    public BinTree(double d) {
+		value = d;
+		left = new FileWrap();
+		right = new FileWrap();
+    }
+    
+    public ArrayList<FileWrap> insert(double d) {
+		ArrayList<FileWrap> path;
+		if (isNull()) {
+		    value = d;
+		    left = new FileWrap();
+		    right = new FileWrap();
+		    path = new ArrayList<FileWrap>();
+		    path.add(left);
+		} else {
+		    if (d < value) {
+		    	path = left.insert(d);
+		    } else {
+		    	path = right.insert(d);
+		    }
+		}
+	     	path.add(0, this);
+		return path;
+    }
+    
+    public String toString() {
+		if (isNull()) { return "[null]"; }
+			return "["+value+"]";
+    }
+    
+    public boolean isNull() {
+    	return (left == null);
+    }
+    
+    public int getDepth() {
+		if (isNull()) { return 1; }
+
+		int l = left.getDepth();
+		int r = right.getDepth();
+		int m = (l>r) ? l : r;
+		return m+1;
+    }
+}
+
+

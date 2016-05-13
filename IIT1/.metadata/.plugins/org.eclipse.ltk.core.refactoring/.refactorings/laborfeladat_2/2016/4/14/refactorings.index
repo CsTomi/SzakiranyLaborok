@@ -1,0 +1,6 @@
+1459887994007	Encapsulate field 'szam'
+1459888000663	Encapsulate field 'mozdony'
+1459900412974	Encapsulate field 'v'
+1459931928010	Rename local variable 'szam'
+1459932002576	Rename local variable 'id'
+1459932019152	Rename local variable 'kes'
